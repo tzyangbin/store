@@ -1,7 +1,7 @@
 package com.tz.store.mapper;
 
-import com.tz.store.entity.Product;
-import com.tz.store.entity.Take;
+
+import com.tz.store.entity.TakeDt;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,34 +10,28 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-
 /**
  * @author yang
- * @version 2023/5/2 23:12
- * @ClassName TakeMapperTest
+ * @version 2023/5/3 11:45
+ * @ClassName TakeDtMapperTest
  * @since jdk11
  */
-
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class TakeMapperTests {
+public class TakeDtMapperTest {
 
     @Autowired
-    private TakeMapper takeMapper;
+    private TakeDtMapper takeDtMapper;
 
     @Test
-    public void findTakeList() {
-        List<Take> list = takeMapper.findTakeList();
+    public void findByDidTest(){
+
+        List<TakeDt> list = takeDtMapper.findByDid(66);
         System.out.println("count=" + list.size());
-        for (Take item : list) {
+        for (TakeDt item : list) {
             System.out.println(item);
         }
     }
-    @Test
-    public void findTakeByList() {
-        Integer did=66;
-        List<Take> list = takeMapper.findTakeByList(did);
-        System.out.println(list);
 
-    }
+
 }

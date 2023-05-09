@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!--edge浏览器H5兼容设置-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--360浏览器H5兼容设置-->
+    <meta name="renderer" content="webkit"/>
+    <title>新土地农业</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--导入核心文件-->
+    <script src="../bootstrap3/js/holder.js"></script>
+    <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+    <script src="../bootstrap3/js/bootstrap.js"></script>
+
+    <script src="../js/adddel.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<!-- 品质保障，私人定制等-->
+<div class="text-center rights container">
+    <div class="h4" >
+        <span class="fa fa-thumbs-o-up"></span>
+        <p>打药信息列表</p>
+    </div>
+</div>
+<!--地址显示-->
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>打药时间</th>
+        <th>打药区域</th>
+        <th colspan="3">操作</th>
+    </tr>
+    </thead>
+    <tbody id="address-list">
+    <tr>
+        <td>家</td>
+        <td>八戒</td>
+        <td>北京市房山区高老庄3排6号</td>
+        <td>1380***1234</td>
+        <td><a class="btn btn-xs btn-info"><span class="fa fa-edit"></span> 修改</a></td>
+        <td><a class="btn btn-xs add-del btn-info"><span class="fa fa-trash-o"></span> 删除</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+<!--<a href="addAddress.html" class="btn btn-sm btn-primary"><span class="fa fa-plus"></span>新增收货地址</a>-->
+</div>
+</div>
+</div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        showTakeList();
+    });
+
+    function showTakeList() {
+        $("#address-list").empty();
+        $("#take-list").empty();
+
+        $.ajax({
+            url: "/take/take_list",
+            type: "GET",
+            dataType: "JSON",
+            success: function (json) {
+                // console.log(json.data)
+                let list = json.data;
+                for (let i = 0; i < list.length; i++) {
+
+                    let address = '<tr>'
+                        + '<td>#{date}</td>'
+                        + '<td>#{area}</td>'
+
+                        + '<td><class="btn btn-xs add-del btn-info"><span class="fa fa-trash-o"></span> <a href="takelist.html?id=#{id}">详细信息</a></td>'
+                        + '</tr>';
+                    address = address.replace(/#{id}/g, list[i].id);
+                    address = address.replace(/#{date}/g, list[i].date);
+                    address = address.replace(/#{area}/g, list[i].area);
+
+                    $("#address-list").append(address);
+                }
+                $(".add-def:eq(0)").hide();
+            },
+            error: function (xhr) {
+                alert("用户信息修改时产生异常：" + xhr.message);
+            }
+        });
+    }
+
+</script>
+</body>
+
+</html>

@@ -7,16 +7,33 @@ import java.io.Serializable;
  *
  * @author yang
  * @version 2023/5/2 22:50
- * @ClassName Daoyao
+ * @ClassName Take
  * @since jdk11
  */
 public class Take extends BaseEntity implements Serializable {
     private Integer id;
+    private Integer uid;
+    /**
+     * 操作日期
+     */
     private String date;
+    /**
+     * 打药区域
+     */
     private String area;
-    private String emp;
-    private String take;
+    /**
+     * 负责人
+     */
+    private String manager;
+    /**
+     * 操作人员
+     */
+    private String operator;
+    /**
+     * 状态,是否删除
+     */
     private Integer status;
+
 
     public Integer getId() {
         return id;
@@ -24,6 +41,14 @@ public class Take extends BaseEntity implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     public String getDate() {
@@ -42,20 +67,20 @@ public class Take extends BaseEntity implements Serializable {
         this.area = area;
     }
 
-    public String getEmp() {
-        return emp;
+    public String getManager() {
+        return manager;
     }
 
-    public void setEmp(String emp) {
-        this.emp = emp;
+    public void setManager(String manager) {
+        this.manager = manager;
     }
 
-    public String getTake() {
-        return take;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setTake(String take) {
-        this.take = take;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public Integer getStatus() {
@@ -71,23 +96,26 @@ public class Take extends BaseEntity implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Take)) return false;
 
-        Take take1 = (Take) o;
+        Take take = (Take) o;
 
-        if (getId() != null ? !getId().equals(take1.getId()) : take1.getId() != null) return false;
-        if (getDate() != null ? !getDate().equals(take1.getDate()) : take1.getDate() != null) return false;
-        if (getArea() != null ? !getArea().equals(take1.getArea()) : take1.getArea() != null) return false;
-        if (getEmp() != null ? !getEmp().equals(take1.getEmp()) : take1.getEmp() != null) return false;
-        if (getTake() != null ? !getTake().equals(take1.getTake()) : take1.getTake() != null) return false;
-        return getStatus() != null ? getStatus().equals(take1.getStatus()) : take1.getStatus() == null;
+        if (getId() != null ? !getId().equals(take.getId()) : take.getId() != null) return false;
+        if (getUid() != null ? !getUid().equals(take.getUid()) : take.getUid() != null) return false;
+        if (getDate() != null ? !getDate().equals(take.getDate()) : take.getDate() != null) return false;
+        if (getArea() != null ? !getArea().equals(take.getArea()) : take.getArea() != null) return false;
+        if (getManager() != null ? !getManager().equals(take.getManager()) : take.getManager() != null) return false;
+        if (getOperator() != null ? !getOperator().equals(take.getOperator()) : take.getOperator() != null)
+            return false;
+        return getStatus() != null ? getStatus().equals(take.getStatus()) : take.getStatus() == null;
     }
 
     @Override
     public int hashCode() {
         int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getUid() != null ? getUid().hashCode() : 0);
         result = 31 * result + (getDate() != null ? getDate().hashCode() : 0);
         result = 31 * result + (getArea() != null ? getArea().hashCode() : 0);
-        result = 31 * result + (getEmp() != null ? getEmp().hashCode() : 0);
-        result = 31 * result + (getTake() != null ? getTake().hashCode() : 0);
+        result = 31 * result + (getManager() != null ? getManager().hashCode() : 0);
+        result = 31 * result + (getOperator() != null ? getOperator().hashCode() : 0);
         result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
         return result;
     }
@@ -96,10 +124,11 @@ public class Take extends BaseEntity implements Serializable {
     public String toString() {
         return "Take{" +
                 "id=" + id +
+                ", uid=" + uid +
                 ", date='" + date + '\'' +
                 ", area='" + area + '\'' +
-                ", emp='" + emp + '\'' +
-                ", take='" + take + '\'' +
+                ", manager='" + manager + '\'' +
+                ", operator='" + operator + '\'' +
                 ", status=" + status +
                 '}';
     }

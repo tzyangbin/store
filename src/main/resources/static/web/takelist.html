@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!--edge浏览器H5兼容设置-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--360浏览器H5兼容设置-->
+    <meta name="renderer" content="webkit"/>
+    <title>新土地农业</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--导入核心文件-->
+    <script src="../bootstrap3/js/holder.js"></script>
+    <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+    <script src="../bootstrap3/js/bootstrap.js"></script>
+
+    <script src="../js/adddel.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+
+<!-- 品质保障，私人定制等-->
+<div class="text-center rights container">
+    <div class="h3" >
+        <span class="fa fa-thumbs-o-up"></span>
+        <p>御庐园植保记录</p>
+    </div>
+</div>
+
+<!--地址显示-->
+<table class="h4">
+    <tbody id="take-list2">
+    <tr>
+        <td>01</td>
+        <td>02</td>
+    </tr>
+    </tbody>
+</table>
+
+<!--打药列表显示-->
+<table class="table table-striped">
+    <thead>
+    <tbody>
+    <tr>
+        <th>序 号</th>
+        <th>药品名称</th>
+        <th>药品参数</th>
+        <th>打药倍数</th>
+        <th>净含量</th>
+        <th>水量</th>
+        <th>药量</th>
+        <th>实际用量</th>
+    </tr>
+    </thead>
+
+    <tbody id="take-list">
+    <tr>
+        <td>01</td>
+        <td>02</td>
+        <td>03</td>
+        <td>04</td>
+        <td>05</td>
+        <td>06</td>
+        <td>07</td>
+    </tr>
+    </tbody>
+</table>
+
+<!--地址显示-->
+<table class="table table-striped">
+    <tbody id="take-list3">
+    <tr>
+        <td>01</td>
+        <td>02</td>
+    </tr>
+    </tbody>
+</table>
+<a href="take.html" class="btn btn-sm btn-primary"><span class="fa fa-plus"></span>返回上页</a>
+</div>
+</div>
+</div>
+</div>
+
+<script type="text/javascript" src="../js/jquery-getUrlParam.js"></script>
+<script type="text/javascript">
+
+    let did = $.getUrlParam("id");
+    console.log("did=" + did);
+    //打药清单信息
+    $(document).ready(function () {
+        $.ajax({
+            url: "/takeDt/" + did + "/list",
+            type: "POST",
+            dataType: "JSON",
+            success: function (json) {
+                $("#take-list").empty();
+                let list = json.data;
+                console.log(list)
+                for (let i = 0; i < list.length; i++) {
+                    let take = '<tr>'
+                        + '<td>1</td>'
+                        + '<td>#{name}</td>'
+                        + '<td>#{param}</td>'
+                        + '<td>#{dosage}</td>'
+                        + '<td>#{volume}</td>'
+                        + '<td>#{dose}</td>'
+                        + '<td>#{charge}</td>'
+                        + '<td>#{weight}</td>'
+                        + '</tr>';
+
+                    take = take.replace(/#{name}/g, list[i].name);
+                    take = take.replace(/#{param}/g, list[i].param);
+                    take = take.replace("#{dosage}", list[i].dosage);
+                    take = take.replace("#{volume}", list[i].volume);
+                    take = take.replace("#{dose}", list[i].dose);
+                    take = take.replace("#{charge}", list[i].charge);
+                    take = take.replace("#{weight}", list[i].weight);
+
+                    $("#take-list").append(take);
+                }
+            }
+        });
+    })
+
+    $(document).ready(function () {
+        $.ajax({
+            url: "/takeDt/" + did + "/take",
+            type: "POST",
+            dataType: "JSON",
+            success: function (json) {
+                $("#take-list2").empty();
+                $("#take-list3").empty();
+                let list = json.data;
+                for (let i = 0; i < list.length; i++) {
+                    let address = '<tr>'
+                        + '<td>打药日期:#{date}</td>'
+                        + '<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp防治对象:#{area}</td>'
+                        + '</tr>';
+
+                    let list3 = '<tr>'
+                        + '<td>操作人员:#{operator}</td>'
+                        + '<td>负责人:#{manager}</td>'
+                        + '</tr>';
+
+
+                    address = address.replace(/#{date}/g, list[i].date);
+                    address = address.replace(/#{area}/g, list[i].area);
+
+                    list3 = list3.replace(/#{manager}/g, list[i].manager);
+                    list3 = list3.replace(/#{operator}/g, list[i].operator);
+                    $("#take-list2").append(address);
+                    $("#take-list3").append(list3);
+                }
+
+            }
+        });
+    })
+
+</script>
+</body>
+
+</html>

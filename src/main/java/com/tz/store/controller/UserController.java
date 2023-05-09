@@ -36,6 +36,9 @@ public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
+
+
+
     @RequestMapping("reg")
     //@ResponseBody 表示此方法响应结果以json格式进行数据响应给到前端
     public JsonResult<Void> reg(User user) {
@@ -47,6 +50,8 @@ public class UserController extends BaseController {
     @RequestMapping("login")
     public JsonResult<User> login(String username, String password, HttpSession session) {
         User data = userService.login(username, password);
+
+
         //登录成功后，将uid和username存入到HttpSession中
         session.setAttribute("uid", data.getUid());
         session.setAttribute("username", data.getUsername());

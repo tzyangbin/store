@@ -6,14 +6,24 @@
     <resultMap id="TakeEntityMap" type="com.tz.store.entity.Take">
         <!--将表的字段不一致进行匹配-->
         <id column="id" property="id"/>
+
         <result column="created_user" property="createdUser"/>
         <result column="created_time" property="createdTime"/>
         <result column="modified_user" property="modifiedUser"/>
         <result column="modified_time" property="modifiedTime"/>
     </resultMap>
-    <select id="findByStatus" resultMap="TakeEntityMap">
+
+    <select id="findTakeList" resultMap="TakeEntityMap">
         SELECT *
-        FROM  y_take
-        WHERE status =#{status}
+        FROM y_take
+        WHERE status = 1
+        ORDER BY id  DESC
     </select>
+
+    <select id="findTakeByList" resultMap="TakeEntityMap">
+        SELECT *
+        FROM y_take
+        WHERE status = 1 and id =#{did}
+    </select>
+
 </mapper>

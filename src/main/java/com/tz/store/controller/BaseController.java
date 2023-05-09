@@ -40,6 +40,7 @@ public class BaseController {
         return session.getAttribute("username").toString();
     }
 
+
     //操作不成功
     //请求处理方法,这个方法的返回值需要传递给前端的数据
     //自动将异常对象传递给此方法的参数列表上
@@ -66,6 +67,9 @@ public class BaseController {
         } else if (e instanceof AccessDeniedException) {
             result.setState(4005);
             result.setMessage("收货地址数据非法访问异常");
+        } else if (e instanceof ProductNotFoundException) {
+            result.setState(4006);
+            result.setMessage("商品数据不存在异常");
         } else if (e instanceof InsertException) {
             result.setState(5000);
             result.setMessage("注册时产生未知异常");
